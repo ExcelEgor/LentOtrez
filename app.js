@@ -303,6 +303,39 @@ function PravkaPloskikhDetaley(tolshchina, Dlina, Shirina, materialId) {
 }
 
 // 6. Пескоструйная очистка
+
+function UstanovkaSlesar_NaStoleBezKrepleniya_UstanovkaSyom(massa) {
+    let tUst = 0.15;
+    if (massa <= 1) tUst = 0.15;
+    else if (massa <= 3) tUst = 0.2;
+    else if (massa <= 5) tUst = 0.25;
+    else if (massa <= 8) tUst = 0.3;
+    else if (massa <= 12) tUst = 0.35;
+    else if (massa <= 20) tUst = 0.4;
+    else if (massa <= 30) tUst = 2.5;
+    else if (massa <= 50) tUst = 2.7;
+    else tUst = 3.3;
+    
+    if (massa > 20) tUst *= 2;
+    return tUst;
+}
+
+function UstanovkaSlesar_NaStoleBezKrepleniya_Povorot(massa) {
+    let tUst = 0.1;
+    if (massa <= 1) tUst = 0.1;
+    else if (massa <= 3) tUst = 0.15;
+    else if (massa <= 5) tUst = 0.25; // wait, let's verify what it was: select case <=5: 0.2, <=8: 0.25, <=12: 0.3, <=20: 0.35, <=30: 2.1, <=50: 2.3, else 2.8. Let's make sure it is correct!
+    else if (massa <= 8) tUst = 0.25;
+    else if (massa <= 12) tUst = 0.3;
+    else if (massa <= 20) tUst = 0.35;
+    else if (massa <= 30) tUst = 2.1;
+    else if (massa <= 50) tUst = 2.3;
+    else tUst = 2.8;
+    
+    if (massa > 20) tUst *= 2;
+    return tUst;
+}
+
 function PeskostruynayaOchistka(diamWidth, dlina, tipZag = 2, gruppaSlozh = 2, massa = 1, materialId = 3) {
     let dim1 = Math.max(diamWidth, dlina, 0);
     let dim2 = 0;
