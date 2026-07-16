@@ -1,0 +1,441 @@
+:root {
+    --bg-dark: #090d16;
+    --card-bg: rgba(30, 41, 59, 0.4);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    
+    /* Цветовые схемы под материалы */
+    --accent-alum: #38bdf8;       /* Неоново-голубой */
+    --accent-med: #f97316;        /* Медно-рыжий */
+    --accent-uglerod: #ef4444;    /* Стальной красный */
+    --accent-legir: #a855f7;      /* Фиолетовый легированный */
+    --accent-nerzhav: #10b981;    /* Изумрудный нержавеющий */
+    
+    --accent-active: var(--accent-alum);
+    --glow-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+    
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Outfit', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Контейнер приложения */
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Заголовок */
+.app-header {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.app-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 40%, var(--accent-active));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: background var(--transition-speed);
+}
+
+.app-header .subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+/* Карточки-блоки */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+    border-left: 3px solid var(--accent-active);
+    padding-left: 8px;
+    transition: border-color var(--transition-speed);
+}
+
+/* Сетка выбора материалов */
+.material-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.material-chip {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.material-chip input {
+    display: none;
+}
+
+.chip-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.material-chip input:checked + .chip-content {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--accent-active);
+    color: var(--text-primary);
+    box-shadow: var(--glow-shadow);
+}
+
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    transition: background 0.2s;
+}
+
+.material-chip[data-material="alum"] input:checked + .chip-content .indicator { background: var(--accent-alum); }
+.material-chip input:checked + .chip-content .indicator {
+    background: var(--accent-active);
+}
+
+/* Сетка выбора профилей */
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 6px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.profile-card span {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.profile-card:hover, .profile-card.active {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-active);
+    box-shadow: var(--glow-shadow);
+}
+
+.profile-card.active span {
+    color: var(--text-primary);
+}
+
+/* Иконки профилей через CSS рисунки */
+.profile-icon {
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--text-secondary);
+    transition: border-color 0.2s;
+}
+
+.profile-card.active .profile-icon {
+    border-color: var(--accent-active);
+}
+
+.profile-icon.circle {
+    border-radius: 50%;
+}
+
+.profile-icon.rect {
+    border-radius: 4px;
+}
+
+.profile-icon.hex {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border: none;
+    background: transparent;
+    box-shadow: inset 0 0 0 2px var(--text-secondary);
+}
+.profile-card.active .profile-icon.hex {
+    box-shadow: inset 0 0 0 2px var(--accent-active);
+}
+
+.profile-icon.rect-pipe {
+    border-radius: 4px;
+    box-shadow: inset 0 0 0 4px var(--bg-dark);
+}
+
+.profile-icon.pipe {
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 4px var(--bg-dark);
+}
+
+.profile-icon.angle {
+    border: none;
+    clip-path: polygon(0 0, 6px 0, 6px 22px, 28px 22px, 28px 28px, 0 28px);
+    background: var(--text-secondary);
+}
+.profile-card.active .profile-icon.angle {
+    background: var(--accent-active);
+}
+
+.profile-icon.channel-p {
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+}
+
+.profile-icon.channel-u {
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    transform: skewY(-8deg);
+}
+
+/* Группы ввода */
+.inputs-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-group label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.input-group input, .input-group select {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+.input-group input:focus, .input-group select:focus {
+    border-color: var(--accent-active);
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+}
+
+.common-inputs {
+    border-top: 1px solid var(--card-border);
+    padding-top: 16px;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Стилизация чекбокса */
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.custom-checkbox input {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.custom-checkbox input:checked + .checkmark {
+    background: var(--accent-active);
+    border-color: var(--accent-active);
+    box-shadow: var(--glow-shadow);
+}
+
+.checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 7px;
+    top: 3px;
+    width: 4px;
+    height: 8px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.custom-checkbox input:checked + .checkmark::after {
+    display: block;
+}
+
+.label-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* Кнопка расчета */
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-active) 0%, rgba(56, 189, 248, 0.7) 100%);
+    border: none;
+    color: #ffffff;
+    padding: 16px;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--glow-shadow);
+    transition: transform 0.1s active, opacity 0.2s;
+}
+
+.btn-primary:active {
+    transform: scale(0.97);
+    opacity: 0.9;
+}
+
+/* Результаты */
+.results-section {
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hidden {
+    display: none;
+}
+
+.weight-display {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    margin-bottom: 20px;
+}
+
+.weight-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.weight-val {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent-active);
+}
+
+.weight-unit {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* Таблица результатов */
+.table-container {
+    overflow-x: auto;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.results-table th, .results-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.results-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.results-table td {
+    font-weight: 500;
+}
+
+.results-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.results-table tbody tr:last-child {
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

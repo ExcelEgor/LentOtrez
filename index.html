@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ленточно-Отрезной Калькулятор</title>
+    <link rel="stylesheet" href="app.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Ленточно-Отрезной Калькулятор</h1>
+            <p class="subtitle">Расчёт массы заготовок и норм времени резки</p>
+        </header>
+
+        <main class="app-content">
+            <!-- Раздел: Выбор материала -->
+            <section class="card material-section">
+                <h2>Материал заготовки</h2>
+                <div class="material-grid">
+                    <label class="material-chip">
+                        <input type="radio" name="material" value="1" checked>
+                        <span class="chip-content" data-material="alum">
+                            <span class="indicator"></span>Алюминий
+                        </span>
+                    </label>
+                    <label class="material-chip">
+                        <input type="radio" name="material" value="2">
+                        <span class="chip-content" data-material="med">
+                            <span class="indicator"></span>Медь
+                        </span>
+                    </label>
+                    <label class="material-chip">
+                        <input type="radio" name="material" value="3">
+                        <span class="chip-content" data-material="uglerod">
+                            <span class="indicator"></span>Углеродистая
+                        </span>
+                    </label>
+                    <label class="material-chip">
+                        <input type="radio" name="material" value="4">
+                        <span class="chip-content" data-material="legir">
+                            <span class="indicator"></span>Легированная
+                        </span>
+                    </label>
+                    <label class="material-chip">
+                        <input type="radio" name="material" value="5">
+                        <span class="chip-content" data-material="nerzhav">
+                            <span class="indicator"></span>Нержавейка
+                        </span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Раздел: Выбор профиля -->
+            <section class="card profile-section">
+                <h2>Профиль (Фигура)</h2>
+                <div class="profile-grid">
+                    <div class="profile-card active" data-profile="pKrug">
+                        <div class="profile-icon circle"></div>
+                        <span>Круг</span>
+                    </div>
+                    <div class="profile-card" data-profile="pPramougol">
+                        <div class="profile-icon rect"></div>
+                        <span>Прямоугольник</span>
+                    </div>
+                    <div class="profile-card" data-profile="pShestigran">
+                        <div class="profile-icon hex"></div>
+                        <span>Шестигранник</span>
+                    </div>
+                    <div class="profile-card" data-profile="pPryamougolTruba">
+                        <div class="profile-icon rect-pipe"></div>
+                        <span>Пр. труба</span>
+                    </div>
+                    <div class="profile-card" data-profile="pTruba">
+                        <div class="profile-icon pipe"></div>
+                        <span>Труба</span>
+                    </div>
+                    <div class="profile-card" data-profile="pUgolnik">
+                        <div class="profile-icon angle"></div>
+                        <span>Уголок</span>
+                    </div>
+                    <div class="profile-card" data-profile="pShveller2">
+                        <div class="profile-icon channel-p"></div>
+                        <span>Швеллер П</span>
+                    </div>
+                    <div class="profile-card" data-profile="pShveller">
+                        <div class="profile-icon channel-u"></div>
+                        <span>Швеллер У</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Раздел: Ввод параметров -->
+            <section class="card params-section">
+                <h2>Параметры размеров (мм)</h2>
+                <div id="dynamic-inputs" class="inputs-container">
+                    <!-- Будет заполняться динамически через JS -->
+                </div>
+                
+                <div class="common-inputs">
+                    <div class="input-group">
+                        <label for="input-L">Длина заготовки L, мм</label>
+                        <input type="number" id="input-L" placeholder="например, 200" required>
+                    </div>
+                    
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="chk-pravka">
+                        <span class="checkmark"></span>
+                        <span class="label-text">Рихтовка (правка)</span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Кнопка действия -->
+            <button type="button" id="btn-calculate" class="btn-primary">Рассчитать результаты</button>
+
+            <!-- Раздел результатов -->
+            <section id="results-card" class="card results-section hidden">
+                <h2>Результаты расчёта</h2>
+                <div class="weight-display">
+                    <span class="weight-label">Масса заготовки:</span>
+                    <span id="result-weight" class="weight-val">0.000</span>
+                    <span class="weight-unit">кг</span>
+                </div>
+
+                <div class="table-container">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Технологическая операция</th>
+                                <th>Тпз, мин</th>
+                                <th>Тшт, мин</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-body">
+                            <!-- Строки операций -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
