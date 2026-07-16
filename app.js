@@ -359,6 +359,54 @@ function VygruzkaIzPechiVTaru(massa, kolVo = 3) {
     return 0.0865 * Math.pow(massa, 0.3) * Math.pow(kolVo, 0.77);
 }
 
+
+function KoeffitsientSovpadeniya(Kz, kolVoPechey = 3) {
+    let KzArray = [];
+    let KsArray = [];
+    
+    switch (kolVoPechey) {
+        case 1:
+        case 2:
+            KzArray = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45];
+            KsArray = [1.01, 1.02, 1.04, 1.06, 1.09, 1.12, 1.16, 1.2, 1.26];
+            break;
+        case 3:
+            KzArray = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45];
+            KsArray = [1.01, 1.02, 1.05, 1.1, 1.15, 1.2, 1.3, 1.4, 1.5, 1.6];
+            break;
+        case 4:
+            KzArray = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45];
+            KsArray = [1.02, 1.04, 1.1, 1.16, 1.26, 1.4, 1.5, 1.7, 1.85, 2.05];
+            break;
+        case 5:
+            KzArray = [0.05, 0.1, 0.15, 0.2, 0.25];
+            KsArray = [1.03, 1.04, 1.15, 1.23, 1.4, 1.65];
+            break;
+        case 6:
+            KzArray = [0.05, 0.1, 0.15];
+            KsArray = [1.04, 1.07, 1.2, 1.35];
+            break;
+        case 7:
+            KzArray = [0.05, 0.1];
+            KsArray = [1.07, 1.12, 1.25];
+            break;
+        default:
+            KzArray = [0.05];
+            KsArray = [1.09, 1.21];
+            break;
+    }
+    
+    if (Kz > KzArray[KzArray.length - 1]) {
+        return KsArray[KsArray.length - 1];
+    }
+    
+    let idx = KzArray.findIndex(x => x >= Kz);
+    if (idx !== -1) {
+        return KsArray[idx];
+    }
+    return KsArray[KsArray.length - 1];
+}
+
 function TermoObrabotka(osnovnoe, vspom, kolVoPechey = 3, kolVoDetaley = 3) {
     if (osnovnoe <= 0) return 0;
     const tOper = osnovnoe + vspom;
